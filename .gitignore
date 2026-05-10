@@ -1,0 +1,22 @@
+# Build artifacts
+build/
+dist/
+*.spec
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.ruff_cache/
+
+# Runtime data (personal, not source)
+history.json
+error.log
+
+# Environment
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db

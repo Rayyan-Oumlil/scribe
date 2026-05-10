@@ -1,0 +1,14 @@
+{
+  "hotkey": "delete",
+  "corrections": {
+    "Ryan": "Rayyan",
+    "Riyan": "Rayyan",
+    "Rayan": "Rayyan"
+  },
+  "snippets": {},
+    "language": "auto-fr-en",
+  "style": {
+    "capitalize": true,
+    "remove_fillers": false
+  }
+}

@@ -1,0 +1,7 @@
+faster-whisper
+sounddevice
+pyautogui
+keyboard
+numpy
+pyperclip
+customtkinter
