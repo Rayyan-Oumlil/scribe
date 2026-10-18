@@ -277,6 +277,20 @@ def _hook(app: "ScribeApp") -> None:
     keyboard.on_release_key(key, lambda e: _on_release(e, app))
 
 
+def _hook_watchdog(app: "ScribeApp") -> None:
+    """Re-register keyboard hooks if displaced by another app (Discord, Steam, etc.)."""
+    while True:
+        time.sleep(10)
+        try:
+            listener = getattr(keyboard, "_listener", None)
+            if listener is None or not listener.is_alive():
+                log("Hook watchdog: listener dead, re-registering.")
+                keyboard.unhook_all()
+                _hook(app)
+        except Exception as e:
+            log(f"Hook watchdog error: {e}")
+
+
 def _on_press(e, app: "ScribeApp") -> None:
     global _recording, _record_start
     if _pasting or _recording:
@@ -367,7 +381,8 @@ class ScribeApp(ctk.CTk):
 
         self._tray = _start_tray(self)
         _hook(self)
-        threading.Thread(target=_idle_monitor, args=(self,), daemon=True).start()
+        threading.Thread(target=_idle_monitor,    args=(self,), daemon=True).start()
+        threading.Thread(target=_hook_watchdog,   args=(self,), daemon=True).start()
         self.protocol("WM_DELETE_WINDOW", self.hide_window)
         log("Ready (model unloaded; will load on first dictation).")
 
